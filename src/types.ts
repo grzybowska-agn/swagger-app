@@ -1,5 +1,14 @@
-type ContactInfoKeys = 'e-mail'
-type LicenceInfoKeys = 'name' | 'url'
+export interface SwaggerDataDTO {
+  info: SwaggerInfo
+  paths: Record<HttpRequestType, Path>
+}
+
+export interface SwaggerData {
+  info: SwaggerInfo
+  paths: PathTuple[]
+}
+
+type PathTuple = [string, (Record<HttpRequestType, Path> & { path: string })[]]
 
 export interface SwaggerInfo {
   description: string
@@ -10,7 +19,77 @@ export interface SwaggerInfo {
   license: Record<LicenceInfoKeys, string>
 }
 
-export interface SwaggerData {
-  info: SwaggerInfo
-  paths: any[]
+type ContactInfoKeys = 'e-mail'
+
+type LicenceInfoKeys = 'name' | 'url'
+
+interface PathResponseHeader {
+  type: DataType
+  format: DataFormat
+  description: string
 }
+interface PathResponse {
+  description: string
+  schema?: Schema
+  headers?: Record<string, PathResponseHeader>
+}
+
+type StatusCode = string
+
+interface SchemaItem {
+  $ref: string
+  type?: DataType
+}
+
+interface SchemaAdditionalProperties {
+  type: DataType
+  format?: DataFormat
+}
+
+type Schema =
+  | SchemaItem
+  | {
+      type?: DataType
+      items?: SchemaItem[]
+      additionalProperties?: SchemaAdditionalProperties
+    }
+
+type DataFormat = 'int64' | 'date-time' | 'int32'
+
+type DataType = 'integer' | 'string' | 'file' | 'array'
+
+type ParameterSource = 'path' | 'formData' | 'body' | 'query'
+
+interface Parameter {
+  name: string
+  in: ParameterSource
+  required: boolean
+  description?: string
+  type?: DataType
+  format?: DataFormat
+  schema?: Schema
+  maximum?: number
+  minimum?: number
+}
+
+type CollectionFormat = 'multi'
+
+type ContentType =
+  | 'application/json'
+  | 'application/xml'
+  | 'multipart/form-data'
+interface Path {
+  tags: string[]
+  summary: string
+  description: string
+  operationId: string
+  consumes?: ContentType[]
+  produces: ContentType[]
+  parameters: Parameter[]
+  responses: Record<StatusCode | 'default', PathResponse>
+  security?: Record<string, string[]>
+  items?: { type: DataType }
+  collectionFormat?: CollectionFormat
+}
+
+type HttpRequestType = 'get' | 'post' | 'put' | 'delete'
