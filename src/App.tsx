@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { getSwaggerData } from './api-service'
+import InfoBlock from './components/info-block/InfoBlock'
 import { SwaggerData } from './types'
 
 function App() {
@@ -30,8 +31,15 @@ function App() {
     <div>
       {loading && <div>Loading...</div>}
       {error && <div>Something went wrong...</div>}
-      {data && <div>{data.info.title}</div>}
-     </div>
+      {data && (
+          <InfoBlock
+            title={data.info.title}
+            description={data.info.description}
+            version={data.info.version}
+            license={data.info.license.name}
+          />
+      )}
+    </div>
   )
 }
 
