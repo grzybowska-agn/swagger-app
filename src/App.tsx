@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
+import { Route, Routes } from 'react-router-dom'
 import { getSwaggerData } from './api-service'
-import InfoBlock from './components/info-block/InfoBlock'
+import Home from './pages/home/Home'
+import PathPage from './pages/single-path/SinglePathPage'
 import { SwaggerData } from './types'
 import { transformDTO } from './utils/transform-response'
 
@@ -25,39 +27,23 @@ function App() {
       }
     }
 
-    fetchData()
+    if (data === null) {
+      fetchData()
+    }
     //TODO: Consider using AbortController to cancel fetch api call before unmounting
   }, [])
 
   return (
-    <div>
-      {loading && <div>Loading...</div>}
-      {error && <div>Something went wrong...</div>}
-      {data && (
-        <div>
-          <InfoBlock
-            title={data.info.title}
-            description={data.info.description}
-            version={data.info.version}
-            license={data.info.license.name}
-          />
-          {data?.paths.map((entry) => {
-            const [group, paths] = entry
-
-            return (
-              <div key={group}>
-                <h2>{group}</h2>
-                <div>
-                  {paths.map((path) => (
-                    <div>{path.path}</div>
-                  ))}
-                </div>
-              </div>
-            )
-          })}
-        </div>
-      )}
-    </div>
+    <Routes>
+      <Route
+        path="/"
+        element={<Home loading={loading} error={error} data={data} />}
+      />
+      <Route
+        path=":id"
+        element={<PathPage loading={loading} error={error} data={data} />}
+      />
+    </Routes>
   )
 }
 

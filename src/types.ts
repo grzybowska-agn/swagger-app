@@ -1,14 +1,23 @@
 export interface SwaggerDataDTO {
   info: SwaggerInfo
-  paths: Record<HttpRequestType, Path>
+  paths: Record<string, PathMethod>
 }
 
 export interface SwaggerData {
   info: SwaggerInfo
-  paths: PathTuple[]
+  groupedPaths: PathGroup[]
+  pathsById: Record<string, PathNode>
 }
 
-type PathTuple = [string, (Record<HttpRequestType, Path> & { path: string })[]]
+type PathGroup = [string, PathNode[]]
+
+export type PathMethod = Record<HttpRequestMethod, Path>
+
+export interface PathNode {
+  methods: PathMethod[]
+  path: string
+  id: string
+}
 
 export interface SwaggerInfo {
   description: string
@@ -92,4 +101,4 @@ interface Path {
   collectionFormat?: CollectionFormat
 }
 
-type HttpRequestType = 'get' | 'post' | 'put' | 'delete'
+export type HttpRequestMethod = 'get' | 'post' | 'put' | 'delete'

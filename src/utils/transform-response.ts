@@ -1,26 +1,52 @@
-import { SwaggerData, SwaggerDataDTO } from '../types'
+import { PathNode, SwaggerData, SwaggerDataDTO } from '../types'
+
+const transformPathToNavighationId = (path: string) => {
+  let transformedPath = ''
+
+  for (let i = 1; i < path.length; i++) {
+    const invalidChars = ['/', '{', '}']
+    if (invalidChars.includes(path[i])) {
+      transformedPath += '_'
+    } else {
+      transformedPath += path[i]
+    }
+  }
+
+  return transformedPath
+}
 
 export const transformDTO = (data: SwaggerDataDTO): SwaggerData => {
   const paths = getDeepCopy(data.paths)
-  const pathsMap = new Map()
+  const groupedPaths = new Map()
+  const pathsById: Record<string, PathNode> = {}
 
   Object.keys(paths)
     .sort((a, b) => a.localeCompare(b))
     .forEach((path) => {
       const [_, parent] = path.split('/')
-      const parentNode = pathsMap.get(parent)
-      const childNode = { methods: paths[path], path }
+      const parentNode: PathNode[] = groupedPaths.get(parent)
+
+      const id = transformPathToNavighationId(path)
+
+      const childNode: PathNode = {
+        methods: paths[path],
+        path,
+        id,
+      }
+
+      pathsById[id] = childNode
 
       if (!parentNode) {
-        pathsMap.set(parent, [childNode])
+        groupedPaths.set(parent, [childNode])
       } else {
-        parentNode.push(childNode)
+        groupedPaths.get(parent).push(childNode)
       }
     })
 
   return {
     info: getDeepCopy(data.info),
-    paths: Array.from(pathsMap.entries()),
+    groupedPaths: Array.from(groupedPaths.entries()),
+    pathsById,
   }
 }
 

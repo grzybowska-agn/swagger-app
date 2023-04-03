@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { SwaggerInfo } from '../../types'
 import ReactMarkdown from 'react-markdown'
+import { Heading1 } from '../headings/Headings'
 
 type InfoBlockProps = Omit<
   SwaggerInfo,
@@ -8,8 +9,6 @@ type InfoBlockProps = Omit<
 > & { license: string }
 
 const StyledInfoBlock = styled.div``
-
-const InfoBlockTitle = styled.h1``
 
 const InfoBlockRow = styled.div``
 
@@ -21,7 +20,7 @@ const InfoBlock = ({
 }: InfoBlockProps) => {
   return (
     <StyledInfoBlock>
-      <InfoBlockTitle>{title}</InfoBlockTitle>
+      <Heading1>{title}</Heading1>
       <ReactMarkdown children={description} />
       <InfoBlockRow>version: {version}</InfoBlockRow>
       <InfoBlockRow>license: {license}</InfoBlockRow>
