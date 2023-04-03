@@ -1,6 +1,6 @@
-import { Heading2 } from '../../components/headings/Headings'
-import InfoBlock from '../../components/info-block/InfoBlock'
-import PathSection from '../../components/path-section/PathSection'
+import { Heading2 } from '../../components/atoms/headings/Headings'
+import InfoBlock from '../../components/organisms/info-block/InfoBlock'
+import PathSection from '../../components/organisms/path-section/PathSection'
 import { SwaggerData } from '../../types'
 
 interface HomeProps {

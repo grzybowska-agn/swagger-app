@@ -1,7 +1,7 @@
 import { PropsWithChildren } from 'react'
 import styled from 'styled-components'
-import ErrorMessage from '../error-message/ErrorMessage'
-import Loader from '../loader/Loader'
+import ErrorMessage from '../../atoms/error-message/ErrorMessage'
+import Loader from '../../atoms/loader/Loader'
 
 const StyledPageWrapper = styled.div`
   display: flex;

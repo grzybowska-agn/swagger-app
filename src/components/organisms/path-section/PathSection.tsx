@@ -1,8 +1,8 @@
 import styled from 'styled-components'
-import { HttpRequestMethod, PathMethods } from '../../types'
-import { Heading3 } from '../headings/Headings'
+import { HttpRequestMethod, PathMethods } from '../../../types'
+import { Heading3 } from '../../atoms/headings/Headings'
 import { Link } from 'react-router-dom'
-import spacings from '../../styles/spacing'
+import spacings from '../../../styles/spacing'
 import MethodSection from '../method-section/MethodSection'
 
 interface PathSectionProps {

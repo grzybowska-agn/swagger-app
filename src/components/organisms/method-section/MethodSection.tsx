@@ -1,8 +1,8 @@
 import styled from 'styled-components'
-import { HttpRequestMethod, Path } from '../../types'
-import spacings from '../../styles/spacing'
+import { HttpRequestMethod, Path } from '../../../types'
+import spacings from '../../../styles/spacing'
 import DetailsSection from '../details-section/DetailsSection'
-import colors from '../../styles/colors'
+import colors from '../../../styles/colors'
 import SyntaxHighlighter from 'react-syntax-highlighter'
 
 const StyledMethodSection = styled.div`

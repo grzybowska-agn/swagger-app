@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { useEffect, useLayoutEffect, useState } from 'react'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import { getSwaggerData } from './api-service'
-import PageWrapper from './components/page-wrapper/PageWrapper'
+import PageWrapper from './components/templates/page-wrapper/PageWrapper'
 import HomePage from './pages/home-page/HomePage'
 import PathPage from './pages/path-page/PathPage'
 import { SwaggerData } from './types'
@@ -11,6 +11,12 @@ function App() {
   const [data, setData] = useState<SwaggerData | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
+
+  const location = useLocation()
+
+  useLayoutEffect(() => {
+    document.documentElement.scrollTo(0, 0)
+  }, [location.pathname])
 
   useEffect(() => {
     const fetchData = async (): Promise<void> => {

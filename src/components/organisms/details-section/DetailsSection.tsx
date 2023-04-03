@@ -1,9 +1,9 @@
 import styled from 'styled-components'
-import spacings from '../../styles/spacing'
-import { Parameter, PathResponse, StatusCode } from '../../types'
+import spacings from '../../../styles/spacing'
+import { Parameter, PathResponse, StatusCode } from '../../../types'
 import SyntaxHighlighter from 'react-syntax-highlighter'
 import DetailsWrapper from './details-wrapper/DetailsWrapper'
-import colors from '../../styles/colors'
+import colors from '../../../styles/colors'
 
 const StyledDetailsSection = styled.div`
   margin-block: ${spacings.XL};

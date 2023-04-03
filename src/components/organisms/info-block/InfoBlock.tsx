@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import { SwaggerInfo } from '../../types'
+import { SwaggerInfo } from '../../../types'
 import ReactMarkdown from 'react-markdown'
-import { Heading1 } from '../headings/Headings'
+import { Heading1 } from '../../atoms/headings/Headings'
 
 type InfoBlockProps = Omit<
   SwaggerInfo,

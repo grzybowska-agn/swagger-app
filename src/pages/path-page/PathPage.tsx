@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom'
-import PathSection from '../../components/path-section/PathSection'
+import PathSection from '../../components/organisms/path-section/PathSection'
 import { SwaggerData } from '../../types'
 
 interface PathPageProps {

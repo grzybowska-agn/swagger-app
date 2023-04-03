@@ -1,5 +1,5 @@
 import { PropsWithChildren } from 'react'
-import { Heading4 } from '../../headings/Headings'
+import { Heading4 } from '../../../atoms/headings/Headings'
 
 const DetailsWrapper = ({
   title,
