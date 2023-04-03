@@ -1,6 +1,14 @@
 import { PathNode, SwaggerData, SwaggerDataDTO } from '../types'
 import JsonRefs from 'json-refs'
 
+//TODO: research better ways for JSON schema handling
+const dereference = async (data: SwaggerDataDTO) => {
+  const { resolved } = await JsonRefs.resolveRefs(data)
+  const { info, paths } = resolved as SwaggerDataDTO
+
+  return { info, paths }
+}
+
 const transformPathToNavighationId = (path: string) => {
   let transformedPath = ''
 
@@ -20,10 +28,8 @@ const transformPathToNavighationId = (path: string) => {
 export const transformDTO = async (
   data: SwaggerDataDTO,
 ): Promise<SwaggerData> => {
-  //TODO: research better ways for JSON schema handling
-  const dereferenced = await JsonRefs.resolveRefs(getDeepCopy(data))
+  const { paths, info } = await dereference(data)
 
-  const paths = (dereferenced.resolved as SwaggerDataDTO).paths
   const groupedPaths = new Map()
   const pathsById: Record<string, PathNode> = {}
 
@@ -51,12 +57,8 @@ export const transformDTO = async (
     })
 
   return {
-    info: getDeepCopy(data.info),
+    info,
     groupedPaths: Array.from(groupedPaths.entries()),
     pathsById,
   }
-}
-
-function getDeepCopy(obj: Record<string, any>) {
-  return JSON.parse(JSON.stringify(obj))
 }
