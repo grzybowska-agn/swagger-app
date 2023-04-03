@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { getSwaggerData } from './api-service'
-import Home from './pages/home/Home'
-import PathPage from './pages/single-path/SinglePathPage'
+import PageWrapper from './components/page-wrapper/PageWrapper'
+import HomePage from './pages/home-page/HomePage'
+import PathPage from './pages/path-page/PathPage'
 import { SwaggerData } from './types'
 import { transformDTO } from './utils/transform-response'
 
@@ -17,7 +18,7 @@ function App() {
 
       try {
         const fetchedData = await getSwaggerData()
-        const parsedData = transformDTO(fetchedData)
+        const parsedData = await transformDTO(fetchedData)
         setData(parsedData)
       } catch (error) {
         setError(true)
@@ -27,23 +28,17 @@ function App() {
       }
     }
 
-    if (data === null) {
-      fetchData()
-    }
+    fetchData()
     //TODO: Consider using AbortController to cancel fetch api call before unmounting
   }, [])
 
   return (
-    <Routes>
-      <Route
-        path="/"
-        element={<Home loading={loading} error={error} data={data} />}
-      />
-      <Route
-        path=":id"
-        element={<PathPage loading={loading} error={error} data={data} />}
-      />
-    </Routes>
+    <PageWrapper loading={loading} error={error}>
+      <Routes>
+        <Route path="/" element={<HomePage data={data} />} />
+        <Route path=":id" element={<PathPage data={data} />} />
+      </Routes>
+    </PageWrapper>
   )
 }
 

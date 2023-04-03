@@ -1,6 +1,6 @@
 export interface SwaggerDataDTO {
   info: SwaggerInfo
-  paths: Record<string, PathMethod>
+  paths: Record<string, PathMethods>
 }
 
 export interface SwaggerData {
@@ -11,10 +11,10 @@ export interface SwaggerData {
 
 type PathGroup = [string, PathNode[]]
 
-export type PathMethod = Record<HttpRequestMethod, Path>
+export type PathMethods = Record<HttpRequestMethod, Path>
 
 export interface PathNode {
-  methods: PathMethod[]
+  methods: PathMethods
   path: string
   id: string
 }
@@ -37,13 +37,13 @@ interface PathResponseHeader {
   format: DataFormat
   description: string
 }
-interface PathResponse {
+export interface PathResponse {
   description: string
   schema?: Schema
   headers?: Record<string, PathResponseHeader>
 }
 
-type StatusCode = string
+export type StatusCode = string
 
 interface SchemaItem {
   $ref: string
@@ -65,11 +65,11 @@ type Schema =
 
 type DataFormat = 'int64' | 'date-time' | 'int32'
 
-type DataType = 'integer' | 'string' | 'file' | 'array'
+type DataType = 'integer' | 'string' | 'file' | 'array' | 'object'
 
 type ParameterSource = 'path' | 'formData' | 'body' | 'query'
 
-interface Parameter {
+export interface Parameter {
   name: string
   in: ParameterSource
   required: boolean
@@ -87,7 +87,7 @@ type ContentType =
   | 'application/json'
   | 'application/xml'
   | 'multipart/form-data'
-interface Path {
+export interface Path {
   tags: string[]
   summary: string
   description: string
