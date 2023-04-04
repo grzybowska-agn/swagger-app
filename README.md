@@ -1,3 +1,9 @@
+# Comments
+- TODO: unit test coverage (example: [InfoBlock UT](https://github.com/grzybowska-agn/swagger-app/blob/main/src/components/organisms/info-block/InfoBlock.test.tsx))
+- It would be useful to wrap child components in React.memo(), should the app re-render frequently
+- Dereferencing schema could be done on server-side as the operation is relatively slow
+- Components structure can be further improved by creating smaller and reusable entities
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
